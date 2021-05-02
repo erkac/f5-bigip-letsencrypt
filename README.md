@@ -2,7 +2,7 @@
 
 As many of my customers ask me how to integrate BIG-IP with Let's Encrypt in order to automate issuing of SSL/TLS Certs. I decided to put all my notes from the procedure here.
 
-This document is based on this [article](https://wiki.lnxgeek.org/doku.php/howtos:let_s_encrypt_-_how_to_issue_certificates_from_a_bigip) and all kudos should go to the original author.
+This document is based on this [article](https://wiki.lnxgeek.org/doku.php/howtos:let_s_encrypt_-_how_to_issue_certificates_from_a_bigip) and all kudos 🙏🏻 should go to the original author.
 
 ## Links
 - [Let's Encrypt on a BigIP](https://wiki.lnxgeek.org/doku.php/howtos:let_s_encrypt_-_how_to_issue_certificates_from_a_bigip)
@@ -29,7 +29,7 @@ Attach [iRule](./letsencrypt.irule) to a VS catching traffic for that particular
 ![](./img/f5-vs.png)
 
 ### Client SSL Profile
-The clientSSL profile must be in this format: `auto_${DOMAIN}` The following script creates those profiles based on the values in `domains.txt` file.
+The clientSSL profile must be in this format: `auto_${DOMAIN}`. The following script [domains.sh](./domains.sh) creates those profiles based on the values in `domains.txt` file.
 
 ```bash
 #!/bin/bash
@@ -175,4 +175,4 @@ ltm profile client-ssl auto_homeoffice.f5demo.app {
 [root@bigipA:Active:Standalone] letsencrypt #
 ```
 
-Don't forget to attach your client-ssl profile to particular VS.
+Don't forget to attach your client-ssl profile to particular VS!
