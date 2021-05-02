@@ -53,7 +53,7 @@ Please customize this file and add your domains. Also please make sure, that the
 You have to run `./domains.sh` script before you continue with this how-to and then every-time you modify `domains.txt` file.
 
 ### hook.sh
-This script just manage the F5 configuration, it's ok to use it in default configuration. No need to change it, unless you need some extra features.
+This [script](./hook.sh) just manage the F5 configuration, it's ok to use it in default configuration. No need to change it, unless you need some extra features.
 
 ### config
 The main configuration file. As I was ok with most of the default configuration as I moved all the files to `/shared/letsencrypt` and I had to only remove comment from the following line:  
@@ -62,10 +62,10 @@ WELLKNOWN="${BASEDIR}/.acme-challenges"
 ```
 
 ### dehydrated
-Please [download](https://github.com/dehydrated-io/dehydrated) dehydrated from GitHub. Then run it as `dehydrated -c`
+Please [download](https://github.com/dehydrated-io/dehydrated) dehydrated from GitHub.
 
 ### wrapper.sh
-Run `wrapper.sh` instead `dehydrated` in production, as wrapper makes sure, that it runs only on the active BIG-IP. Also it creates logs and can send you email notification. Please review the configuration options and adjust accordingly:
+Run [wrapper.sh](./wrapper.sh) instead `dehydrated` in production, as `wrapper.sh` makes sure, that it runs only on the active BIG-IP (in case of HA cluster). Also it creates logs and can send you email notification. Please review the configuration options and adjust accordingly:
 ```bash
 MAILRCPT="example@example.com"
 MAILFROM="f5@example"
@@ -81,7 +81,7 @@ echo "" > $MAILFILE
 
 In this script I commented the line `cd /shared/scripts` as all the files resides in `/shared/letsencrypt`
 
-Also don't forget to add the `send_mail` script to `cd /shared/scripts`.
+Also don't forget to add the [send_mail](./send_mail) script to `cd /shared/scripts`.
 
 ### iCal
 Create the iCall configuration to renew your certificates automatically.
@@ -133,7 +133,9 @@ rm /etc/pki/tls/certs/ca-bundle.crt
 curl -k https://curl.se/ca/cacert.pem -o /etc/pki/tls/certs/ca-bundle.crt
 ```
 
-Very likely `dehydrated` response will be, that for the first time you have to start it with the following options `./dehydrated --register --accept-terms`, please do so and then finally start it with `./dehydrated -c`.
+> Also please check your DNS configuration if the connection fails.
+
+Next... very likely `dehydrated` response will be, that for the first time you have to start it with the following options `./dehydrated --register --accept-terms`, please do so and then finally start it with `./dehydrated -c`.
 
 You should see the whole procedure and then find your certificate here:
 ```
