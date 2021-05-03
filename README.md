@@ -57,16 +57,16 @@ You have to run `./domains.sh` script before you continue with this how-to and t
 This [script](./letsencrypt/hook.sh) just manage the F5 configuration, it's ok to use it in default configuration. No need to change it, unless you need some extra features.
 
 ### config
-The main configuration file. As I was ok with most of the default configuration as I moved all the files to `/shared/letsencrypt` and I had to only remove comment from the following line:  
+The main [configuration file](./letsencrypt/config). As I was ok with most of the default configuration as I moved all the files to `/shared/letsencrypt` and I had to only remove comment from the following line:  
 ```bash
 WELLKNOWN="${BASEDIR}/.acme-challenges"
 ```
 
 ### dehydrated
-Please [download](https://github.com/dehydrated-io/dehydrated) dehydrated from GitHub.
+Please [download](https://github.com/dehydrated-io/dehydrated) dehydrated ACME client from GitHub.
 
 ### wrapper.sh
-Run [wrapper.sh](./letsencrypt/wrapper.sh) instead `dehydrated` in production, as `wrapper.sh` makes sure, that it runs only on the active BIG-IP (in case of HA cluster). Also it creates logs and can send you email notification. Please review the configuration options and adjust accordingly:
+In production, run [wrapper.sh](./letsencrypt/wrapper.sh) instead of `dehydrated`, as `wrapper.sh` makes sure, that it runs only on the active BIG-IP (in case of HA cluster). Also it creates logs and can send you email notification. Please review the configuration options and adjust accordingly:
 ```bash
 MAILRCPT="example@example.com"
 MAILFROM="f5@example"
@@ -80,9 +80,9 @@ date >$LOGFILE 2>&1
 echo "" > $MAILFILE
 ```
 
-In this script I commented the line `cd /shared/scripts` as all the files resides in `/shared/letsencrypt`
+Compared to the original script, I commented out the line `cd /shared/scripts` as all the files resides in `/shared/letsencrypt`
 
-Also don't forget to add the [send_mail](./letsencrypt/send_mail) script to `cd /shared/scripts`.
+Also don't forget to include the [send_mail](./letsencrypt/send_mail) in your `/shared/letsencrypt` folder. It's being used to sending out email notifications.
 
 ### iCal
 Create the iCall configuration to renew your certificates automatically.
@@ -94,7 +94,7 @@ tmsh save sys config
 ```
 
 ### Run dehydrated and test 🎉
-Your `/shared/letsencrypt` folder should look like this one:
+At this point, your `/shared/letsencrypt` folder should look like this one:
 ```
 [root@bigipA:Active:Standalone] letsencrypt # ls -la
 total 140
@@ -113,13 +113,13 @@ drwxr-xr-x.  2 root root  4096 Apr 30 08:42 .acme-challenges
 
 Please make sure that the relevant scripts have the `+x` flag enabled.
 
-Now you should be able to start it and see if it works correctly.
+Now, you should be able to run `dehydrated` and to see if it works correctly.
 ```bash
 cd /shared/letsencrypt
 ./dehydrated -c
 ```
 
-I've saw on a few systems that the `curl` refuse to connect:
+On a few systems, I noticed that the `curl` refused to connect:
 ```
 [root@bigipA:Active:Standalone] letsencrypt # ./dehydrated -c
 # INFO: Using main config file /shared/letsencrypt/config
@@ -134,7 +134,7 @@ rm /etc/pki/tls/certs/ca-bundle.crt
 curl -k https://curl.se/ca/cacert.pem -o /etc/pki/tls/certs/ca-bundle.crt
 ```
 
-> Also please check your DNS configuration if the connection fails.
+> In case of connection failure, please double-check your DNS configuration. Which is the most common issue.
 
 Next... very likely `dehydrated` response will be, that for the first time you have to start it with the following options `./dehydrated --register --accept-terms`, please do so and then finally start it with `./dehydrated -c`.
 
