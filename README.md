@@ -25,7 +25,7 @@ tmsh create ltm data-group internal acme_responses type string
 ```
 
 ### iRule
-Attach [iRule](./letsencrypt/letsencrypt.irule) to a VS catching traffic for that particular domain. Where you want to add the cert from Let's Encrypt.
+Attach [iRule](./letsencrypt.irule) to a VS catching traffic for that particular domain. Where you want to add the cert from Let's Encrypt.
 
 ![](./img/f5-vs.png)
 
