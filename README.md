@@ -16,6 +16,7 @@ It's recommended to store all the related files and scripts in `/shared` folder 
 mkdir /shared/letsencrypt
 mkdir /shared/letsencrypt/.acme-challenges
 ```
+Then you can put content of `./letsencrypt/` folder from this repository to your `/shared/letsencrypt` folder on your BIG-IP.
 
 ### DataGroup
 Create DG for storing acme responses.
@@ -24,12 +25,12 @@ tmsh create ltm data-group internal acme_responses type string
 ```
 
 ### iRule
-Attach [iRule](./letsencrypt.irule) to a VS catching traffic for that particular domain. Where you want to add the cert from Let's Encrypt.
+Attach [iRule](./letsencrypt/letsencrypt.irule) to a VS catching traffic for that particular domain. Where you want to add the cert from Let's Encrypt.
 
 ![](./img/f5-vs.png)
 
 ### Client SSL Profile
-The clientSSL profile must be in this format: `auto_${DOMAIN}`. The following script [domains.sh](./domains.sh) creates those profiles based on the values in `domains.txt` file.
+The clientSSL profile must be in this format: `auto_${DOMAIN}`. The following script [domains.sh](./letsencrypt/domains.sh) creates those profiles based on the values in `domains.txt` file.
 
 ```bash
 #!/bin/bash
@@ -53,7 +54,7 @@ Please customize this file and add your domains. Also please make sure, that the
 You have to run `./domains.sh` script before you continue with this how-to and then every-time you modify `domains.txt` file.
 
 ### hook.sh
-This [script](./hook.sh) just manage the F5 configuration, it's ok to use it in default configuration. No need to change it, unless you need some extra features.
+This [script](./letsencrypt/hook.sh) just manage the F5 configuration, it's ok to use it in default configuration. No need to change it, unless you need some extra features.
 
 ### config
 The main configuration file. As I was ok with most of the default configuration as I moved all the files to `/shared/letsencrypt` and I had to only remove comment from the following line:  
@@ -65,7 +66,7 @@ WELLKNOWN="${BASEDIR}/.acme-challenges"
 Please [download](https://github.com/dehydrated-io/dehydrated) dehydrated from GitHub.
 
 ### wrapper.sh
-Run [wrapper.sh](./wrapper.sh) instead `dehydrated` in production, as `wrapper.sh` makes sure, that it runs only on the active BIG-IP (in case of HA cluster). Also it creates logs and can send you email notification. Please review the configuration options and adjust accordingly:
+Run [wrapper.sh](./letsencrypt/wrapper.sh) instead `dehydrated` in production, as `wrapper.sh` makes sure, that it runs only on the active BIG-IP (in case of HA cluster). Also it creates logs and can send you email notification. Please review the configuration options and adjust accordingly:
 ```bash
 MAILRCPT="example@example.com"
 MAILFROM="f5@example"
@@ -81,7 +82,7 @@ echo "" > $MAILFILE
 
 In this script I commented the line `cd /shared/scripts` as all the files resides in `/shared/letsencrypt`
 
-Also don't forget to add the [send_mail](./send_mail) script to `cd /shared/scripts`.
+Also don't forget to add the [send_mail](./letsencrypt/send_mail) script to `cd /shared/scripts`.
 
 ### iCal
 Create the iCall configuration to renew your certificates automatically.
@@ -178,3 +179,6 @@ ltm profile client-ssl auto_homeoffice.f5demo.app {
 ```
 
 Don't forget to attach your client-ssl profile to particular VS!
+
+## Disclaimer
+This how-to is provided as is. Use it at your own responsibility.
