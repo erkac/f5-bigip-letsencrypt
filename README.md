@@ -56,11 +56,14 @@ You have to run `./domains.sh` script before you continue with this how-to and t
 ### hook.sh
 This [script](./letsencrypt/hook.sh) just manage the F5 configuration, it's ok to use it in default configuration. No need to change it, unless you need some extra features.
 
+> Seems that the `tmsh` commands used in this script are not valid for TMOS v12.1. If it is your case, please use [hook-v12-1.sh](./letsencrypt/hook-v12-1.sh). Don't forget to rename it to `hook.sh` before using it.
+
 ### config
 The main [configuration file](./letsencrypt/config). As I was ok with most of the default configuration as I moved all the files to `/shared/letsencrypt` and I had to only remove comment from the following line:  
 ```bash
 WELLKNOWN="${BASEDIR}/.acme-challenges"
 ```
+> Prior to BIG-IP 14.1.0, you must have an RSA certificate/key pair assigned to an SSL profile. You can only associate other algorithms such as DSA/ECDSA on top of the RSA certificate/key pair assignment. If it is your case, please use this config option `KEY_ALGO=rsa`.
 
 ### dehydrated
 Please [download](https://github.com/dehydrated-io/dehydrated) dehydrated ACME client from GitHub.
