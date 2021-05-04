@@ -136,7 +136,18 @@ curl -k https://curl.se/ca/cacert.pem -o /etc/pki/tls/certs/ca-bundle.crt
 
 > In case of connection failure, please double-check your DNS configuration. Which is the most common issue.
 
-Next... very likely `dehydrated` response will be, that for the first time you have to start it with the following options `./dehydrated --register --accept-terms`, please do so and then finally start it with `./dehydrated -c`.
+Next... very likely `dehydrated` response will be:
+```bash
+[root@bigipA:Active:Standalone] letsencrypt # ./dehydrated -c
+# INFO: Using main config file /shared/letsencrypt/config
+
+To use dehydrated with this certificate authority you have to agree to their terms of service which you can find here: https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf
+
+To accept these terms of service run `./dehydrated --register --accept-terms`.
+[root@bigipA:Active:Standalone] letsencrypt # ./dehydrated --register --accept-terms
+```
+
+So please read and then agree with the terms of service by running: `./dehydrated --register --accept-terms` and finally continue with `./dehydrated -c`.
 
 You should see the whole procedure and then find your certificate here:
 ```
