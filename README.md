@@ -29,7 +29,7 @@ Attach [iRule](./letsencrypt.irule) to a VS catching traffic for that particular
 
 ![](./img/f5-vs.png)
 
-> It should be enough to have `letsencrypt.irule` attached only to HTTP based VS. However if your HTTP VS does redirection to HTTPS VS, you should attach the iRule there. You can find more details on it [here](https://letsencrypt.org/docs/challenge-types/#http-01-challenge).
+> It should be enough to have `letsencrypt.irule` attached only to HTTP based VS. However if your HTTP VS returns only HTTP Redirect to an HTTPS VS, you should attach the iRule there. You can find more details on it [here](https://letsencrypt.org/docs/challenge-types/#http-01-challenge).
 
 ### Client SSL Profile
 The clientSSL profile must be in this format: `auto_${DOMAIN}`. The following script [domains.sh](./letsencrypt/domains.sh) creates those profiles based on the values in `domains.txt` file.
