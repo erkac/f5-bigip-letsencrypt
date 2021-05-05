@@ -19,8 +19,8 @@ To: $MAILRCPT
 Date: $DATE
 Subject: $message
 EOF
-  cat $LOGFILE >> $MAILFILE
   echo -e "\n" >> $MAILFILE # send_mail detects body by empty line
+  cat $LOGFILE >> $MAILFILE
   $SENDMAIL $MAILSERVER $MAILSERVERPORT $MAILFILE >/dev/null 2>&1
 }
 
