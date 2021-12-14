@@ -89,7 +89,7 @@ Compared to the original script, I commented out the line `cd /shared/scripts` a
 
 Also don't forget to include the [send_mail](./letsencrypt/send_mail) in your `/shared/letsencrypt` folder. It's being used to sending out email notifications.
 
-### iCal
+### iCall
 Create the iCall configuration to renew your certificates automatically.
 ```
 tmsh create sys icall script letsencrypt
