@@ -71,7 +71,7 @@ WELLKNOWN="${BASEDIR}/.acme-challenges"
 Please [download](https://github.com/dehydrated-io/dehydrated) dehydrated ACME client from GitHub.
 
 ### wrapper.sh
-In production, run [wrapper.sh](./letsencrypt/wrapper.sh) instead of `dehydrated`, as `wrapper.sh` makes sure, that it runs only on the active BIG-IP (in case of HA cluster). Also it creates logs and can send you email notification. Please review the configuration options and adjust accordingly:
+In production, run [wrapper.sh](./letsencrypt/wrapper.sh) instead of `dehydrated`. The `wrapper.sh` makes sure, that it runs on the active BIG-IP (in case of HA cluster) only, also it creates logs and can send you email notification. Please review the configuration options and adjust accordingly:
 ```bash
 MAILRCPT="example@example.com"
 MAILFROM="f5@example"
