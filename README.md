@@ -31,6 +31,8 @@ Attach [iRule](./letsencrypt.irule) to a VS catching traffic for that particular
 
 > It should be enough to have `letsencrypt.irule` attached only to HTTP based VS. However if your HTTP VS returns only HTTP Redirect to an HTTPS VS, you should attach the iRule there. You can find more details on it [here](https://letsencrypt.org/docs/challenge-types/#http-01-challenge).
 
+> Make sure, that other iRules are not negatively interfering with the `letsencrypt.irule`.
+
 ### Client SSL Profile
 The clientSSL profile must be in this format: `auto_${DOMAIN}`. The following script [domains.sh](./letsencrypt/domains.sh) creates those profiles based on the values in `domains.txt` file.
 
@@ -56,7 +58,7 @@ Please customize this file and add your domains. Also please make sure, that the
 You have to run `./domains.sh` script before you continue with this how-to and then every-time you modify `domains.txt` file.
 
 ### hook.sh
-This [script](./letsencrypt/hook.sh) just manage the F5 configuration, it's ok to use it in default configuration. No need to change it, unless you need some extra features.
+This [script](./letsencrypt/hook.sh) just manages the F5 configuration, it's ok to use it in default configuration. No need to change it, unless you need some extra features. if you are wondering how the challenge from Let's Encypt is responded or how the client-ssl profile is updated... it's this script which does all the magic.
 
 > Seems that the `tmsh` commands used in this script are not valid for TMOS v12.1. If it is your case, please use [hook-v12-1.sh](./letsencrypt/hook-v12-1.sh). Don't forget to rename it to `hook.sh` before using it.
 
