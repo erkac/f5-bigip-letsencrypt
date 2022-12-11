@@ -1,6 +1,6 @@
 # F5 BIG-IP and Let's Encrypt
 
-[![F5 badge](https://img.shields.io/badge/-F5-red)](https://www.f5.com)
+[![F5 badge](https://img.shields.io/badge/-BIGIP-red)](https://www.f5.com)
 [![works badge](https://cdn.jsdelivr.net/gh/nikku/works-on-my-machine@v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
 
 As many of my customers ask me how to integrate BIG-IP with Let's Encrypt in order to automate issuing of SSL/TLS Certs. I decided to put all my notes from the procedure here.
