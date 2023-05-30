@@ -3,7 +3,7 @@
 [![F5 badge](https://img.shields.io/badge/-BIGIP-red)](https://www.f5.com)
 [![works badge](https://cdn.jsdelivr.net/gh/nikku/works-on-my-machine@v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
 
-As many of my customers ask me how to integrate BIG-IP with Let's Encrypt in order to automate issuing of SSL/TLS Certs. I decided to put all my notes from the procedure here.
+As many of my customers ask me how to integrate BIG-IP with Let's Encrypt in order to automate issuing of SSL/TLS Certs, I decided to put all my notes from the procedure here.
 
 This document is based on this [article](https://wiki.lnxgeek.org/doku.php/howtos:let_s_encrypt_-_how_to_issue_certificates_from_a_bigip) and all kudos 🙏🏻 should go to the original author.
 
@@ -35,6 +35,8 @@ Attach [iRule](./letsencrypt.irule) to a VS catching traffic for that particular
 > It should be enough to have `letsencrypt.irule` attached only to HTTP based VS. However if your HTTP VS returns only HTTP Redirect to an HTTPS VS, you should attach the iRule there. You can find more details on it [here](https://letsencrypt.org/docs/challenge-types/#http-01-challenge).
 
 > Make sure, that other iRules are not negatively interfering with the `letsencrypt.irule`.
+>
+> `default-responder.irule` it's just dummy iRule to get some response from VS, for your production deployment your VS will be using some real backend pool to serve the traffic.
 
 ### Client SSL Profile
 The clientSSL profile must be in this format: `auto_${DOMAIN}`. The following script [domains.sh](./letsencrypt/domains.sh) creates those profiles based on the values in `domains.txt` file.
